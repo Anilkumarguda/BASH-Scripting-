@@ -1,0 +1,83 @@
+===========================================
+   BASH SCRIPTING - BASICS + DO’s & DON’Ts
+===========================================
+
+1) SCRIPT BASICS
+----------------
+- Every script starts with a SHEBANG line:
+  #!/bin/bash
+
+- Save script with .sh extension (optional but good practice).
+
+- Make script executable:
+  chmod +x script.sh
+
+- Run script:
+  ./script.sh      → Run from current directory
+  bash script.sh   → Run with bash explicitly
+
+- Structure of a simple script:
+  --------------------------------
+  #!/bin/bash
+  # My first script
+
+  # Variables
+  name="Anil"
+
+  # Print output
+  echo "Hello, $name"
+
+  # Conditions
+  if [[ $1 -gt 10 ]]; then
+      echo "Greater than 10"
+  else
+      echo "10 or less"
+  fi
+
+  # Loop
+  for i in 1 2 3; do
+      echo "Number: $i"
+  done
+  --------------------------------
+
+-------------------------------------------
+2) DO’s
+--------
+✔ Always use SHEBANG (#!/bin/bash).
+✔ Add comments (#) to explain logic.
+✔ Quote variables → "$var" (prevents word-splitting).
+✔ Use [[ ]] for conditions (safer than [ ]).
+✔ Use meaningful variable names (not a,b,c).
+✔ Use functions for reusable code.
+✔ Test script step-by-step (echo, set -x).
+✔ Use exit codes (exit 0 = success, exit 1 = error).
+✔ Always handle unexpected input.
+✔ Indent code for readability.
+
+-------------------------------------------
+3) DON’Ts
+---------
+✘ Don’t forget to give execute permission (chmod +x).
+✘ Don’t leave variables unquoted (risk of errors).
+   Example:  rm $file   → BAD (fails if $file has spaces)
+             rm "$file" → GOOD
+✘ Don’t hardcode absolute paths unless required.
+✘ Don’t use backticks `` `command` `` → prefer $(command).
+✘ Don’t ignore exit codes (check with $?).
+✘ Don’t use root for testing scripts → use normal user.
+✘ Don’t assume script works same in all shells 
+   (stick to bash, not sh/dash).
+✘ Don’t write one big script — break into functions/files.
+
+-------------------------------------------
+4) DEBUGGING TIP
+----------------
+- Run with debug mode:
+  bash -x script.sh
+- Or add inside script:
+  set -x    # Turn on debug
+  set +x    # Turn off debug
+
+-------------------------------------------
+
+END OF NOTES
