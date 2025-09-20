@@ -1,0 +1,98 @@
+===========================================
+      BASH SCRIPTING - QUICK REFERENCE
+===========================================
+
+1) SYMBOLS & OPERATORS
+----------------------
+#      → Comment
+$      → Variable expansion
+=      → Assignment
+==     → String compare (inside [[ ]])
+-eq    → Equal (integer compare)
+-ne    → Not equal (integer compare)
+-lt    → Less than
+-le    → Less than or equal
+-gt    → Greater than
+-ge    → Greater than or equal
+&&     → Logical AND
+||     → Logical OR
+!      → Logical NOT
+
+>      → Redirect output (overwrite)
+>>     → Redirect output (append)
+<      → Input redirection
+|      → Pipe output
+
+;      → Run multiple commands
+&      → Run in background
+()     → Subshell
+{}     → Command group / expansion
+[]     → Test command
+[[ ]]  → Advanced test (regex, &&, ||)
+
+$?     → Exit status of last command
+*      → Wildcard (any string)
+?      → Wildcard (single char)
+$#     → Number of args
+$@     → All args (separately)
+$*     → All args (as one string)
+$( )   → Command substitution
+`` ` ` → Legacy command substitution
+
+-------------------------------------------
+
+2) FUNCTIONS
+------------
+# Define
+function_name() {
+   commands
+}
+
+# Example
+greet() {
+   echo "Hello, $1"
+}
+greet "Anil"
+
+Special:
+$1 $2 ...   → Arguments
+$@          → All args
+return <n>  → Return exit code
+
+-------------------------------------------
+
+3) COMMON BUILT-IN COMMANDS
+----------------------------
+echo      → Print
+read      → User input
+test [ ]  → Condition check
+expr      → Arithmetic
+let / (( )) → Arithmetic evaluation
+if/then/fi → Conditional execution
+case/esac → Switch case
+for/while/until → Loops
+break/continue → Loop control
+exit      → End script
+trap      → Catch signals
+export    → Set environment var
+shift     → Shift arguments
+
+-------------------------------------------
+EXAMPLE SCRIPT
+--------------
+#!/bin/bash
+name="Anil"
+echo "Hello $name"
+
+if [[ $1 -gt 10 ]]; then
+   echo "Value greater than 10"
+else
+   echo "Value less or equal to 10"
+fi
+
+for i in 1 2 3; do
+   echo "Number $i"
+done
+-------------------------------------------
+
+END OF CHEAT SHEET
