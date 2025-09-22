@@ -1,98 +1,48 @@
-===========================================
-      BASH SCRIPTING - QUICK REFERENCE
-===========================================
-
-1) SYMBOLS & OPERATORS
-----------------------
-#      → Comment
-$      → Variable expansion
-=      → Assignment
-==     → String compare (inside [[ ]])
--eq    → Equal (integer compare)
--ne    → Not equal (integer compare)
--lt    → Less than
--le    → Less than or equal
--gt    → Greater than
--ge    → Greater than or equal
-&&     → Logical AND
-||     → Logical OR
-!      → Logical NOT
-
->      → Redirect output (overwrite)
->>     → Redirect output (append)
-<      → Input redirection
-|      → Pipe output
-
-;      → Run multiple commands
-&      → Run in background
-()     → Subshell
-{}     → Command group / expansion
-[]     → Test command
-[[ ]]  → Advanced test (regex, &&, ||)
-
-$?     → Exit status of last command
-*      → Wildcard (any string)
-?      → Wildcard (single char)
-$#     → Number of args
-$@     → All args (separately)
-$*     → All args (as one string)
-$( )   → Command substitution
-`` ` ` → Legacy command substitution
-
--------------------------------------------
-
-2) FUNCTIONS
-------------
-# Define
-function_name() {
-   commands
-}
-
-# Example
-greet() {
-   echo "Hello, $1"
-}
-greet "Anil"
-
-Special:
-$1 $2 ...   → Arguments
-$@          → All args
-return <n>  → Return exit code
-
--------------------------------------------
-
-3) COMMON BUILT-IN COMMANDS
-----------------------------
-echo      → Print
-read      → User input
-test [ ]  → Condition check
-expr      → Arithmetic
-let / (( )) → Arithmetic evaluation
-if/then/fi → Conditional execution
-case/esac → Switch case
-for/while/until → Loops
-break/continue → Loop control
-exit      → End script
-trap      → Catch signals
-export    → Set environment var
-shift     → Shift arguments
-
--------------------------------------------
-EXAMPLE SCRIPT
---------------
-#!/bin/bash
-name="Anil"
-echo "Hello $name"
-
-if [[ $1 -gt 10 ]]; then
-   echo "Value greater than 10"
-else
-   echo "Value less or equal to 10"
-fi
-
-for i in 1 2 3; do
-   echo "Number $i"
-done
--------------------------------------------
-
-END OF CHEAT SHEET
+| **Category**                    | **Symbol / Variable** | **Usage / Meaning**               | **Example**                          | **Expected Output**              | **Notes / Use Case**                        |                   |                  |                   |                       |
+| ------------------------------- | --------------------- | --------------------------------- | ------------------------------------ | -------------------------------- | ------------------------------------------- | ----------------- | ---------------- | ----------------- | --------------------- |
+| Comments & Execution            | `#`                   | Comment                           | `# Backup script`                    | None                             | Explain code inside script                  |                   |                  |                   |                       |
+| Comments & Execution            | `#!`                  | Shebang / Interpreter             | `#!/bin/bash`                        | None                             | Ensures script runs in specific shell       |                   |                  |                   |                       |
+| Variables & Expansion           | `$`                   | Variable substitution             | `x=5; echo $x`                       | `5`                              | Access variable value                       |                   |                  |                   |                       |
+| Variables & Expansion           | `${}`                 | Explicit variable reference       | `echo ${x}test`                      | `5test`                          | Avoid confusion in concatenation            |                   |                  |                   |                       |
+| Variables & Expansion           | `$$`                  | Current shell PID                 | `echo $$`                            | `3245`                           | Useful for unique temp files                |                   |                  |                   |                       |
+| Variables & Expansion           | `$!`                  | Last background command PID       | `sleep 30 & echo $!`                 | `4567`                           | Track jobs                                  |                   |                  |                   |                       |
+| Variables & Expansion           | `$?`                  | Exit status of last command       | `ls xyz; echo $?`                    | `2`                              | Debugging failures                          |                   |                  |                   |                       |
+| Variables & Expansion           | `$_`                  | Last argument of previous command | `ls file.txt; echo $_`               | `file.txt`                       | Shortcut                                    |                   |                  |                   |                       |
+| Variables & Expansion           | `$0`                  | Script name                       | `./myscript.sh; echo $0`             | `./myscript.sh`                  | Useful in logging                           |                   |                  |                   |                       |
+| Variables & Expansion           | `$1, $2...`           | Positional parameters             | `./script.sh foo bar; echo $1 $2`    | `foo bar`                        | Argument handling                           |                   |                  |                   |                       |
+| Variables & Expansion           | `$@`                  | All arguments separately          | `for i in "$@"; do echo $i; done`    | Each arg in new line             | Best for loops                              |                   |                  |                   |                       |
+| Variables & Expansion           | `$*`                  | All arguments as string           | `echo $*`                            | `foo bar`                        | Treat all args as one                       |                   |                  |                   |                       |
+| Variables & Expansion           | `shift`               | Shift arguments left              | `shift`                              | `$2 → $1`                        | Skip first argument                         |                   |                  |                   |                       |
+| Quoting & Escaping              | `' '`                 | Single quotes                     | `echo '$HOME'`                       | `$HOME`                          | Literal string                              |                   |                  |                   |                       |
+| Quoting & Escaping              | `" "`                 | Double quotes                     | `echo "Home: $HOME"`                 | `Home: /home/user`               | Expand variables safely                     |                   |                  |                   |                       |
+| Quoting & Escaping              | `` ` ` ``             | Command substitution (legacy)     | ``echo `date` ``                     | `Mon Sep 22 17:00:00 IST 2025`   | Prefer `$()`                                |                   |                  |                   |                       |
+| Quoting & Escaping              | `$()`                 | Command substitution              | `echo $(date)`                       | Same as above                    | Preferred modern method                     |                   |                  |                   |                       |
+| Command Substitution & Grouping | `()`                  | Subshell                          | `(cd /tmp; ls)`                      | List of `/tmp` files             | Run commands without altering current shell |                   |                  |                   |                       |
+| Command Substitution & Grouping | `{}`                  | Command grouping                  | `{ echo "A"; echo "B"; }`            | `A B`                            | Groups commands in current shell            |                   |                  |                   |                       |
+| Arithmetic & Conditionals       | `(( ))`               | Arithmetic expansion              | `echo $((2+3))`                      | `5`                              | Integer math                                |                   |                  |                   |                       |
+| Arithmetic & Conditionals       | `expr`                | Arithmetic command                | `expr 10 \* 2`                       | `20`                             | Legacy math                                 |                   |                  |                   |                       |
+| Arithmetic & Conditionals       | `let`                 | Inline arithmetic                 | `let x=5+3; echo $x`                 | `8`                              | Assign arithmetic values                    |                   |                  |                   |                       |
+| Arithmetic & Conditionals       | `[[ ]]`               | Conditional test                  | `[[ -f file.txt ]] && echo "exists"` | `exists`                         | File or pattern check                       |                   |                  |                   |                       |
+| Arithmetic & Conditionals       | `=~`                  | Regex match                       | `[[ "abc123" =~ [a-z]+[0-9]+ ]]`     | Match success                    | Validate strings                            |                   |                  |                   |                       |
+| Arithmetic & Conditionals       | `-eq, -lt, -gt`       | Integer comparisons               | `[ 5 -gt 3 ] && echo yes`            | `yes`                            | Numeric tests                               |                   |                  |                   |                       |
+| Arithmetic & Conditionals       | `-f, -d, -e`          | File tests                        | `[ -d /etc ] && echo "dir"`          | `dir`                            | Check files/directories                     |                   |                  |                   |                       |
+| Arithmetic & Conditionals       | `:`                   | Null command                      | `: > file.txt`                       | None                             | Do nothing / truncate file                  |                   |                  |                   |                       |
+| Command Control                 | `;`                   | Command separator                 | `echo "One"; echo "Two"`             | `One Two`                        | Sequential commands                         |                   |                  |                   |                       |
+| Command Control                 | `&&`                  | Logical AND                       | `mkdir test && cd test`              | Change dir                       | Run next if previous succeeds               |                   |                  |                   |                       |
+| Command Control                 | \`                    |                                   | \`                                   | Logical OR                       | \`cd dir                                    |                   | mkdir dir\`      | Directory created | Run if previous fails |
+| Command Control                 | `!`                   | Negation                          | `if ! false; then echo yes; fi`      | `yes`                            | Reverse condition                           |                   |                  |                   |                       |
+| Redirection & Pipes             | `>`                   | Redirect stdout                   | `echo hi > file.txt`                 | `file.txt` content: `hi`         | Save output to file                         |                   |                  |                   |                       |
+| Redirection & Pipes             | `>>`                  | Append stdout                     | `echo more >> file.txt`              | `file.txt` content: appended     | Append logs                                 |                   |                  |                   |                       |
+| Redirection & Pipes             | `<`                   | Input redirect                    | `wc -l < file.txt`                   | Line count                       | Use file as input                           |                   |                  |                   |                       |
+| Redirection & Pipes             | `2>`                  | Error redirect                    | `ls xyz 2> error.txt`                | `error.txt`: error msg           | Capture errors                              |                   |                  |                   |                       |
+| Redirection & Pipes             | `&>`                  | Redirect all                      | `./script &> all.log`                | all.log contains output & errors | Full logging                                |                   |                  |                   |                       |
+| Redirection & Pipes             | \`                    | \`                                | Pipe                                 | \`ls                             | grep ".sh"\`                                | Lists `.sh` files | Command chaining |                   |                       |
+| Wildcards & Patterns            | `*`                   | Matches zero or more chars        | `ls *.sh`                            | All `.sh` files                  | File search                                 |                   |                  |                   |                       |
+| Wildcards & Patterns            | `?`                   | Matches one char                  | `ls file?.txt`                       | file1.txt file2.txt              | Numeric or letter patterns                  |                   |                  |                   |                       |
+| Wildcards & Patterns            | `[]`                  | Character class                   | `ls [ab]*`                           | Files starting a/b               | Match multiple chars                        |                   |                  |                   |                       |
+| Wildcards & Patterns            | `~`                   | Tilde / home                      | `cd ~`                               | Home directory                   | Shortcut                                    |                   |                  |                   |                       |
+| Background / Jobs               | `&`                   | Run in background                 | `sleep 100 &`                        | `[1] 1234`                       | Multitasking                                |                   |                  |                   |                       |
+| Background / Jobs               | `fg`                  | Foreground job                    | `fg %1`                              | Process resumes                  | Job control                                 |                   |                  |                   |                       |
+| Background / Jobs               | `jobs`                | List background jobs              | `jobs`                               | `[1]+ Running sleep 100 &`       | Monitor jobs                                |                   |                  |                   |                       |
+| Here Docs & Strings             | `<<`                  | Here document                     | `cat <<EOF ... EOF`                  | Multiline text                   | Embed configs or SQL                        |                   |                  |                   |                       |
+| Here Docs & Strings             | `<<<`                 | Here string                       | `wc -w <<< "hello world"`            | `2`                              | Pass string input                           |                   |                  |                   |                       |
